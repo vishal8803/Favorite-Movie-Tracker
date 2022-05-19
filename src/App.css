@@ -1,38 +1,101 @@
-.App {
-  text-align: center;
+.card{
+  border: none;
+  border-radius: 0%;
+  overflow: hidden;
+}
+.banner-img{
+  width: 100vw;
+  height: 40rem;
+  position: relative;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.banner-body{
+  position: absolute;
+  top: 20rem;
+  left: 2rem;
+  color: #FFF;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.banner-title{
+  font-size: 3rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.banner-text{
+  height: 4.5rem;
+  overflow: hidden;
+}
+
+.movie-list-body{
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  overflow: hidden;
 }
 
-.App-link {
-  color: #61dafb;
+.movie-card{
+  width: 20vw;
+  margin: 1rem;
+  position: relative;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.movie-img{
+  height: 40vh;
+  width: 20vw;
 }
+
+.movie-card-body{
+  position: absolute;
+  top: 1rem;
+  color: #fff;
+  
+}
+.movie-title{
+  font-size: 1.5rem;
+}
+
+.btn-fav{
+  position: absolute;
+  bottom: 1rem;
+  margin-left: 1rem;
+}
+
+@media screen and (max-width: 500px){
+  .banner-img{
+    width: 100vw;
+    height: 20rem;
+    position: relative;
+  }
+  .banner-body{
+    position: absolute;
+    top: 8rem;
+    left: 1rem;
+    color: #FFF;
+  }
+  .banner-title{
+    font-size: 1.5rem;
+  }
+  .movie-card{
+    width: 45vw;
+    margin: 0rem;
+    padding: 0.5rem;
+    /* padding: 10px; */
+    overflow: hidden;
+    /* margin-right: 10px; */
+  }
+  .movie-img{
+    width: 50vw;
+    height: 10rem;
+  }
+  .movie-title{
+    font-size: 1rem;
+  }
+  .btn-fav{
+    position: absolute;
+    bottom: 1rem;
+    margin-left: 0.5rem;
+  }
+
+}
+
+
