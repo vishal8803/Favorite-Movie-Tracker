@@ -1,17 +1,106 @@
 import React, { Component } from 'react'
-import { movies } from './getMoviesJSON'
+import axios from 'axios';
 
 export default class Movies extends Component {
     constructor(){
         super();
         this.state=({
             hover:'',
-            parr: [1]
+            movies:[],
+            parr:[1],
+            currpage:1
         })
     }
 
+    async componentDidMount(){
+        const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=ac4fc2e627e1ae81adf444ecbd9790e0&language=en-US&page=${this.state.currpage}`)
+        
+        let data = res.data;
+
+        this.setState({
+             movies: [...data.results]
+         })
+    }
+
+    changeMovies=async()=>{
+        const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=ac4fc2e627e1ae81adf444ecbd9790e0&language=en-US&page=${this.state.currpage}`)
+        
+        let data = res.data;
+
+        this.setState({
+             movies: [...data.results]
+         })
+    }
+
+    nextPage = ()=>{
+        let len = this.state.parr.length;
+        let currpage = this.state.currpage;
+        let parr = this.state.parr;
+        
+        if(currpage==this.state.parr[len-1]){
+            let temparr = [];
+            if(len<5){
+                for(let i = 0; i < len+1; i++){
+                    temparr.push(i+1);
+                }
+            }else{
+                for(let i = 1; i < len; i++){
+                    temparr.push(parr[i]);
+                }
+                temparr.push(currpage+1);
+            }
+            this.setState({
+                parr: [...temparr],
+                currpage: this.state.currpage + 1
+            },this.changeMovies)
+        }else{
+            this.setState({
+                currpage: this.state.currpage + 1
+            },this.changeMovies)
+        }
+    }
+
+    prevpage = ()=>{
+        let len = this.state.parr.length;
+        let currpage = this.state.currpage;
+        let parr = this.state.parr;
+
+        if(currpage>1){
+            if(parr[len-1]<=5 && parr[0]>=1){
+                this.setState({
+                    currpage:currpage-1
+                },this.changeMovies)
+            }else{
+                if(currpage==parr[0]){
+                    let temparr = [];
+                    for(let i = 0; i < len; i++){
+                        temparr.push(parr[i]-1);
+                    }
+                    this.setState({
+                        parr:[...temparr],
+                        currpage:currpage-1
+                    },this.changeMovies)
+                }else{
+                    this.setState({
+                        currpage:currpage-1
+                    },this.changeMovies)
+                }
+            }
+        }
+    }
+
+    handleClick=(pageno)=>{
+        let currpage = this.state.currpage;
+        if(pageno != currpage){
+            this.setState({
+                currpage:pageno
+            },this.changeMovies)
+        }
+    }
+    prev = "<<";
+    next = ">>";
   render() {
-    let movie = movies.results;
+    
     // alert(JSON.stringify(movie))
     return (
       <div>
@@ -19,7 +108,10 @@ export default class Movies extends Component {
           <div className='movie-list-body'>
               
             {
-                movie.map((movieObj)=>(
+                this.state.movies.length==0?<div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>:
+                this.state.movies.map((movieObj)=>(
                     <div key={movieObj.id} className="card movie-card rounded" onMouseEnter={()=>this.setState({hover:movieObj.id})} onMouseLeave={()=>this.setState({hover:''})}>
                         <img src={`https://image.tmdb.org/t/p/original${movieObj.backdrop_path}`} className="card-img-top movie-img" alt="..."/>
                         <div className="card-body movie-card-body">
@@ -36,13 +128,14 @@ export default class Movies extends Component {
             </div>
             <nav aria-label="Page navigation example" style={{display:'flex', justifyContent:'center'}}>
                 <ul className="pagination">
-                    <li className="page-item"><a className="page-link" href="#">Previous</a></li>
+                    <li className="page-item"><a className="page-link" style={{cursor:'pointer'}} onClick={this.prevpage}>{this.prev}</a></li>
                     {
                         this.state.parr.map((value)=>(
-                            <li key={value} className="page-item"><a className="page-link" href="#">{value}</a></li>
+                            value==this.state.currpage?<li key={value} className="page-item"><a style={{fontWeight:'bolder',cursor:'pointer'}} className="page-link" onClick={()=>this.handleClick(value)}>{value}</a></li>:
+                            <li key={value} className="page-item"><a style={{color:'black',cursor:'pointer'}} className="page-link" onClick={()=>this.handleClick(value)}>{value}</a></li>
                         ))
                     }
-                    <li className="page-item"><a className="page-link" href="#">Next</a></li>
+                    <li className="page-item"><a className="page-link" style={{cursor:'pointer'}} onClick={this.nextPage}>{this.next}</a></li>
                 </ul>
             </nav>
       </div>
