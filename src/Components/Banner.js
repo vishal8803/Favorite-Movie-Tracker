@@ -3,7 +3,7 @@ import {movies} from './getMoviesJSON'
 
 export default class Banner extends Component {
   render() {
-    let movie = movies.results[0];
+    let movie = movies.results[7];
     return (
         <>
         <div className="card mb-3 rounded-0 border-dark">

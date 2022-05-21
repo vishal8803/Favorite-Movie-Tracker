@@ -60,6 +60,14 @@
   margin-left: 1rem;
 }
 
+.genre-list{
+  padding: 3rem;
+}
+
+.genre-desc{
+  padding: 3rem;
+}
+
 @media screen and (max-width: 500px){
   .banner-img{
     width: 100vw;
