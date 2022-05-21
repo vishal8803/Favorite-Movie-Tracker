@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import {movies} from './getMoviesJSON'
 
 export default class Banner extends Component {
   render() {
-    let movie = movies.results[7];
+    let movie = {"adult":false,"backdrop_path":"/7WJjFviFBffEJvkAms4uWwbcVUk.jpg","genre_ids":[12,14,35,28],"id":451048,"original_language":"en","original_title":"Jungle Cruise","overview":"Dr. Lily Houghton enlists the aid of wisecracking skipper Frank Wolff to take her down the Amazon in his dilapidated boat. Together, they search for an ancient tree that holds the power to heal – a discovery that will change the future of medicine.","popularity":2422.668,"poster_path":"/9dKCd55IuTT5QRs989m9Qlb7d2B.jpg","release_date":"2021-07-28","title":"Jungle Cruise","video":false,"vote_average":7.9,"vote_count":2517};
+    
     return (
         <>
         <div className="card mb-3 rounded-0 border-dark">
